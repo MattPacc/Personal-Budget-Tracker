@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Category - Personal Budget Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Update Category</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/categories">Manage Categories</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <form action="/update_category/{{ category.id }}" method="POST">
+            <legend><strong>Edit Category</strong></legend>
+            <fieldset>
+                <input type="hidden" value="{{ category.id }}" name="categoryID" required>
+                <label for="categoryName">Category Name:</label>
+                <input type="text" id="categoryName" name="categoryName" value="{{ category.name }}" required>
+            </fieldset>
+            <button type="submit" name="Update_Category">Update Category</button>
+            <button type="button" onClick="window.location.href='/categories'">Cancel</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>© 2024 Personal Budget Tracker. All rights reserved.</p>
+    </footer>
+</body>
+</html>

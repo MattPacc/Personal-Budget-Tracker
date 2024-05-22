@@ -15,26 +15,59 @@ app.config['MYSQL_CURSORCLASS'] = "DictCursor"
 mysql = MySQL(app)
 
 
-# Routes
-@app.route('/')
-def root():
-    query = "SELECT * FROM diagnostic;"
-    query1 = 'DROP TABLE IF EXISTS diagnostic;';
-    query2 = 'CREATE TABLE diagnostic(id INT PRIMARY KEY AUTO_INCREMENT, text VARCHAR(255) NOT NULL);';
-    query3 = 'INSERT INTO diagnostic (text) VALUES ("MySQL is working for paccionm!")';
-    query4 = 'SELECT * FROM diagnostic;';
-    cur = mysql.connection.cursor()
-    cur.execute(query1)
-    cur.execute(query2)
-    cur.execute(query3)
-    cur.execute(query4)
-    results = cur.fetchall()
+@app.route("/")
+def home():
+    return render_template("index.html")
 
-    return "<h1>MySQL Results</h1>" + str(results[0])
+
+@app.route("/categories", methods=["POST", "GET"])
+def manage_categories():
+    if request.method == "POST":
+        if request.form.get("Add_Category"):
+            category_name = request.form["categoryName"]
+            query = "INSERT INTO categories (name) VALUES (%s);"
+            cur = mysql.connection.cursor()
+            cur.execute(query, (category_name,))
+            mysql.connection.commit()
+        return redirect("/categories")
+
+    if request.method == "GET":
+        query = "SELECT * FROM categories;"
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        categories = cur.fetchall()
+        return render_template("categories.html", categories=categories)
+
+
+@app.route("/delete_category/<int:id>")
+def delete_category(id):
+    query = "DELETE FROM categories WHERE id = %s;"
+    cur = mysql.connection.cursor()
+    cur.execute(query, (id,))
+    mysql.connection.commit()
+    return redirect("/categories")
+
+
+@app.route("/update_category/<int:id>", methods=["POST", "GET"])
+def update_category(id):
+    if request.method == "GET":
+        query = "SELECT * FROM categories WHERE id = %s;" % id
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        category = cur.fetchone()
+        return render_template("update_category.html", category=category)
+
+    if request.method == "POST":
+        if request.form.get("Update_Category"):
+            category_name = request.form["categoryName"]
+            query = "UPDATE categories SET name = %s WHERE id = %s;"
+            cur = mysql.connection.cursor()
+            cur.execute(query, (category_name, id))
+            mysql.connection.commit()
+        return redirect("/categories")
 
 
 # Listener
 if __name__ == "__main__":
-
     #Start the app on port 55308, it will be different once hosted
     app.run(port=55308, debug=True)
