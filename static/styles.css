@@ -1,0 +1,80 @@
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff; /* White background */
+}
+
+.container {
+    flex: 1;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap; /* Allow flex items to wrap */
+    gap: 20px; /* Space between items */
+}
+
+
+/* Header styles */
+header {
+    background-color: #000000; /* Black background */
+    color: #ffffff; /* White text */
+    padding: 20px; 
+    text-align: center; 
+    border-bottom: 2px solid #cccccc; /* Light gray border */
+}
+
+header h1 {
+    margin: 0;
+}
+
+/* Navigation styles */
+nav {
+    text-align: center;
+    background-color: #cccccc; /* Light gray background */
+    padding: 10px 0; /* Add padding for better readability */
+    display: flex;
+    justify-content: center; /* Center the navigation items */
+}
+
+nav a {
+    color: #000000; /* Black text */
+    text-decoration: none;
+    margin: 0 10px;
+    transition: all 0.3s ease;
+    padding: 5px 10px;
+}
+
+nav ul {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 10px; /* Space between links */
+}
+
+nav a:hover {
+    background-color: #8a88e2; /* White background on hover */
+    color: #000000; /* Black text on hover */
+}
+
+/* Section styles */
+section {
+    background-color: #f0f0f0; /* Light gray background for sections */
+    padding: 20px;
+    box-sizing: border-box; /* Include padding in width */
+    min-width: 300px; /* Minimum width for smaller screens */
+    margin-bottom: 20px; /* Additional spacing at the bottom of each section */
+}
+
+footer {
+    color: #000000; /* Black text */
+    padding: 10px 0; /* Add padding for better readability */
+    text-align: center; /* Center-align text */
+    margin-top: auto; /* Push footer to the bottom */
+  }
