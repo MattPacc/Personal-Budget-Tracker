@@ -1,3 +1,10 @@
+{# Citation for the following code:
+Date: 05/22/2024
+Adapted from:
+Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app?tab=readme-ov-file#step-0---quick-and-dirty-task-1-setup
+and
+Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app #}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,28 +14,20 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <script>
         function showform(dowhat) {
-            if(dowhat == 'insert') {
-                document.getElementById('browse').style.display = 'none';
-                document.getElementById('insert').style.display = 'block';
-                document.getElementById('edit').style.display = 'none';
-                document.getElementById('delete').style.display = 'none';
-            } else if(dowhat == 'update') {
-                document.getElementById('browse').style.display = 'none';
-                document.getElementById('insert').style.display = 'none';
-                document.getElementById('edit').style.display = 'block';
-                document.getElementById('delete').style.display = 'none';
-            } else if(dowhat == 'delete') {
-                document.getElementById('browse').style.display = 'none';
-                document.getElementById('insert').style.display = 'none';
-                document.getElementById('edit').style.display = 'none';
-                document.getElementById('delete').style.display = 'block';
-            } else {
-                document.getElementById('browse').style.display = 'block';
-                document.getElementById('insert').style.display = 'none';
-                document.getElementById('edit').style.display = 'none';
-                document.getElementById('delete').style.display = 'none';
-            }
+    const sections = ['browse', 'insert', 'edit', 'delete'];
+    sections.forEach(section => {
+        const element = document.getElementById(section);
+        if (element) {
+            element.style.display = 'none';
         }
+    });
+
+    const elementToShow = document.getElementById(dowhat);
+    if (elementToShow) {
+        elementToShow.style.display = 'block';
+    }
+}
+
     </script>
 </head>
 <body onload="showform('browse')">
@@ -42,53 +41,121 @@
     </header>
 
     <main>
+        <!-- Error Messages Section -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div>
+                    {% for category, message in messages %}
+                        <p style="color:red;">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
         <!-- Browse Categories Section -->
-        <div id="browse">
-            <p><a href="#" onClick="showform('insert')">Add New</a></p>
-            <table border="1" cellpadding="5">
-                {% if categories %}
+        <section>
+            <div id="browse">
+                <p><a href="#" onClick="showform('insert')">Add New</a></p>
+                <table border="1" cellpadding="5">
+                    {% if categories %}
+                        <thead>
+                            <tr>
+                                {% for key in categories[0].keys() %}
+                                    <th>{{ key }}</th>
+                                {% endfor %}
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for category in categories %}
+                                <tr>
+                                    {% for key in category.keys() %}
+                                        <td>{{ category[key] }}</td>
+                                    {% endfor %}
+                                    <td>
+                                        <a href="/update_category/{{ category.categoryID }}">Edit</a>
+                                        <form action="/delete_category/{{ category.categoryID }}" method="POST" style="display:inline;">
+                                            <button type="submit">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    {% endif %}
+                </table>
+            </div>
+        </section>
+
+        <!-- Insert Category Section -->
+            <div id="insert">
+                <form action="/categories" method="POST">
+                    <legend><strong>Add Category</strong></legend>
+                    <fieldset>
+                        <label for="categoryName">Category Name:</label>
+                        <input type="text" id="categoryName" name="categoryName" required>
+                    </fieldset>
+                    <button type="submit" name="Add_Category">Add Category</button>
+                    <button type="button" onClick="showform('browse')">Cancel</button>
+                </form>
+            </div>
+
+        <!-- Existing Category-Expense Links Section -->
+        <section>
+            <div>
+                <h3>Existing Category-Expense Links</h3>
+                <table border="1" cellpadding="5">
                     <thead>
                         <tr>
-                            {% for key in categories[0].keys() %}
-                                <th>{{ key }}</th>
-                            {% endfor %}
+                            <th>Category ID</th>
+                            <th>Category Name</th>
+                            <th>Expense ID</th>
+                            <th>Expense Description</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for category in categories %}
+                        {% for link in category_expense_links %}
                             <tr>
-                                {% for key in category.keys() %}
-                                    <td>{{ category[key] }}</td>
-                                {% endfor %}
+                                <td>{{ link.categoryID }}</td>
+                                <td>{{ link.categoryName }}</td>
+                                <td>{{ link.expenseID }}</td>
+                                <td>{{ link.expenseDescription }}</td>
                                 <td>
-                                    <a href="/update_category/{{ category.id }}">Edit</a>
-                                    <form action="/delete_category/{{ category.id }}" method="POST" style="display:inline;">
+                                    <form action="/delete_category_expense_link/{{ link.categoryID }}/{{ link.expenseID }}" method="POST" style="display:inline;">
                                         <button type="submit">Delete</button>
                                     </form>
                                 </td>
                             </tr>
                         {% endfor %}
                     </tbody>
-                {% endif %}
-            </table>
-        </div>
+                </table>
+            </div>
+        </section>
 
-        <!-- Insert Category Section -->
-        <div id="insert">
-            <form action="/categories" method="POST">
-                <legend><strong>Add Category</strong></legend>
-                <fieldset>
-                    <label for="categoryName">Category Name:</label>
-                    <input type="text" id="categoryName" name="categoryName" required>
-                </fieldset>
-                <button type="submit" name="Add_Category">Add Category</button>
-                <button type="button" onClick="showform('browse')">Cancel</button>
-            </form>
-        </div>
-
-        <!-- Edit Category Section (this will be in a separate file) -->
-        <!-- No need to include this part in this file -->
+                <!-- Link Expense to Category Section -->
+        <section>
+            <div id="link">
+                <form action="/link_expense_to_category" method="POST">
+                    <legend><strong>Link Expense to Category</strong></legend>
+                    <fieldset>
+                        <label for="expenseID">Expense:</label>
+                        <select id="expenseID" name="expenseID" required>
+                            {% for expense in expenses %}
+                                <option value="{{ expense.expenseID }}">{{ expense.description }}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="categoryID">Category:</label>
+                        <select id="categoryID" name="categoryID" required>
+                            {% for category in categories %}
+                                <option value="{{ category.categoryID }}">{{ category.categoryName }}</option>
+                            {% endfor %}
+                        </select>
+                    </fieldset>
+                    <button type="submit">Link</button>
+                    <button type="button" onClick="showform('browse')">Cancel</button>
+                </form>
+            </div>
+        </section>
     </main>
 
     <footer>

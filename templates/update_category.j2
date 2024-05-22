@@ -1,3 +1,10 @@
+{# Citation for the following code:
+Date: 05/22/2024
+Adapted from:
+Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app?tab=readme-ov-file#step-0---quick-and-dirty-task-1-setup
+and
+Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app #}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,12 +25,12 @@
     </header>
 
     <main>
-        <form action="/update_category/{{ category.id }}" method="POST">
+        <form action="/update_category/{{ category.categoryID }}" method="POST">
             <legend><strong>Edit Category</strong></legend>
             <fieldset>
-                <input type="hidden" value="{{ category.id }}" name="categoryID" required>
+                <input type="hidden" value="{{ category.categoryID }}" name="categoryID" required>
                 <label for="categoryName">Category Name:</label>
-                <input type="text" id="categoryName" name="categoryName" value="{{ category.name }}" required>
+                <input type="text" id="categoryName" name="categoryName" value="{{ category.categoryName }}" required>
             </fieldset>
             <button type="submit" name="Update_Category">Update Category</button>
             <button type="button" onClick="window.location.href='/categories'">Cancel</button>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personal Budget Tracker</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <header>
@@ -16,7 +16,7 @@
             <!-- <li><a href="users.html">Manage Users</a></li>
             <li><a href="accounts.html">Manage Accounts</a></li>
             <li><a href="income_sources.html">Manage Income Sources</a></li> -->
-            <li><a href="categories.html">Manage Categories</a></li>
+            <li><a href="/categories">Manage Categories</a></li>
             <!-- <li><a href="expenses.html">Manage Expenses</a></li>
             <li><a href="user_passwords.html">Manage User Passwords</a></li> -->
 
