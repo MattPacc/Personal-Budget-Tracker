@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Expenses - Personal Budget Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Manage Expenses</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="users.html">Manage Users</a></li>
+                <li><a href="accounts.html">Manage Accounts</a></li>
+                <li><a href="income_sources.html">Manage Income Sources</a></li>
+                <li><a href="categories.html">Manage Categories</a></li>
+                <li><a href="expenses.html">Manage Expenses</a></li>
+                <li><a href="user_passwords.html">Manage User Passwords</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Section to add a new expense -->
+        <section>
+            <h3>Add New Expense</h3>
+            <form action="#!" method="POST">
+                <label for="userID">User ID:</label>
+                <input type="text" id="userID" name="userID" required><br>
+                
+                <label for="expenseAmount">Amount:</label>
+                <input type="number" id="expenseAmount" name="expenseAmount" step="0.01" required><br>
+        
+                <label for="expenseDate">Date:</label>
+                <input type="date" id="expenseDate" name="expenseDate" required><br>
+        
+                <label for="expenseCategory">Category:</label>
+                <select id="expenseCategory" name="expenseCategory">
+                    <option value="">None</option> <!-- This represents a NULL category -->
+                    <option value="Travel">Travel</option>
+                    <option value="Supplies">Supplies</option>
+                    <option value="Services">Services</option>
+                </select><br>
+        
+                <button type="submit">Add Expense</button>
+            </form>
+        </section>
+
+        <!-- Section to filter expenses by category -->
+        <section>
+            <h3>Filter Expenses by Category</h3>
+            <form action="#!" method="GET">
+                <label for="categoryIdFilter">Category:</label>
+                <select id="categoryIdFilter" name="categoryIdFilter">
+                    <option value="">All</option>
+                    <option value="1">Travel</option>
+                    <option value="2">Supplies</option>
+                    <option value="3">Services</option>
+                </select>
+                <button type="submit">Filter</button>
+            </form>
+        </section>
+
+        <!-- Section to display existing expenses -->
+        <section>
+            <h3>Existing Expenses</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Expense ID</th>
+                        <th>User ID</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Category</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Example row (this will be generated dynamically later) -->
+                    <tr>
+                        <td>1</td>
+                        <td>101</td>
+                        <td>$150.00</td>
+                        <td>2024-05-01</td>
+                        <td>Travel</td>
+                        <td>
+                            <button>Edit</button>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Section to update existing expenses -->
+        <section>
+            <h3>Update Existing Expense</h3>
+            <p>To update an expense, please modify the information below and submit.</p>
+            <form action="#!" method="POST">
+                <input type="hidden" id="expenseIdToUpdate" name="expenseId">
+        
+                <label for="updateExpenseAmount">Amount:</label>
+                <input type="number" id="updateExpenseAmount" name="expenseAmount" step="0.01" required><br>
+        
+                <label for="updateExpenseDate">Date:</label>
+                <input type="date" id="updateExpenseDate" name="expenseDate" required><br>
+        
+                <label for="updateExpenseCategory">Category:</label>
+                <select id="updateExpenseCategory" name="expenseCategory">
+                    <option value="">None</option> <!-- Allows setting category to NULL -->
+                    <option value="Travel">Travel</option>
+                    <option value="Supplies">Supplies</option>
+                    <option value="Services">Services</option>
+                </select><br>
+        
+                <button type="submit">Update Expense</button>
+            </form>
+        </section>
+
+        <!-- Section to delete expenses -->
+        <section>
+            <h3>Delete Expense</h3>
+            <p>To delete an expense, please confirm your action.</p>
+            <form action="#!" method="POST">
+                <button type="submit">Delete Expense</button>
+            </form>
+        </section>
+
+        <!-- Section to display existing expense-category links -->
+        <section>
+            <h3>Existing Expense-Category Links</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Expense ID</th>
+                        <th>Category ID</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Example row (this will be generated dynamically later) -->
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 Personal Budget Tracker. All rights reserved.</p>
+    </footer>
+</body>
+</html>

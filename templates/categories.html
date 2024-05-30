@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Categories - Personal Budget Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Manage Categories</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="users.html">Manage Users</a></li>
+                <li><a href="accounts.html">Manage Accounts</a></li>
+                <li><a href="income_sources.html">Manage Income Sources</a></li>
+                <li><a href="categories.html">Manage Categories</a></li>
+                <li><a href="expenses.html">Manage Expenses</a></li>
+                <li><a href="user_passwords.html">Manage User Passwords</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Section to add a new category -->
+        <section>
+            <h3>Add New Category</h3>
+            <form action="#!" method="POST">
+                <label for="categoryName">Category Name:</label>
+                <input type="text" id="categoryName" name="categoryName" required><br>
+                
+                <button type="submit">Add Category</button>
+            </form>
+        </section>
+
+        <!-- Section to display existing categories -->
+        <section>
+            <h3>Existing Categories</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category ID</th>
+                        <th>Category Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Example row (this will be generated dynamically later) -->
+                    <tr>
+                        <td>1</td>
+                        <td>Travel</td>
+                        <td>
+                            <button>Edit</button>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Section to update existing categories -->
+        <section>
+            <h3>Update Existing Category</h3>
+            <p>To update a category, please confirm and submit.</p>
+            <form action="#!" method="POST">
+                <button type="submit">Update Category</button>
+            </form>
+        </section>
+
+        <!-- Section to delete categories -->
+        <section>
+            <h3>Delete Category</h3>
+            <p>To delete a category and set associated expenses' category to None, please confirm your action.</p>
+            <form action="#!" method="POST">
+                <button type="submit">Delete Category</button>
+            </form>
+        </section>
+
+        <!-- Section to display existing category-expense links -->
+        <section>
+            <h3>Existing Category-Expense Links</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category ID</th>
+                        <th>Expense ID</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Example row (this will be generated dynamically later) -->
+                    <tr>
+                        <td>1</td>
+                        <td>101</td>
+                        <td>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Section to link expenses to categories via intersection table -->
+        <section>
+            <h3>Link Expense to Category</h3>
+            <form action="#!" method="POST">
+                <label for="linkExpenseID">Expense:</label>
+                <select id="linkExpenseID" name="expenseID" required>
+                    <option value="">Select an Expense</option>
+                    <!-- Dynamically populated options for expenses -->
+                    <option value="1">Expense 1</option>
+                    <option value="2">Expense 2</option>
+                    <!-- More options should be added dynamically from the database -->
+                </select><br>
+                
+                <label for="linkCategoryID">Category:</label>
+                <select id="linkCategoryID" name="categoryID" required>
+                    <option value="">Select a Category</option>
+                    <!-- Dynamically populated options for categories -->
+                    <option value="1">Travel</option>
+                    <option value="2">Supplies</option>
+                    <option value="3">Services</option>
+                    <!-- More options should be added dynamically from the database -->
+                </select><br>
+                
+                <button type="submit">Add Link</button>
+            </form>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© 2024 Personal Budget Tracker. All rights reserved.</p>
+    </footer>
+</body>
+</html>

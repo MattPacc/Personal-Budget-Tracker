@@ -1,0 +1,215 @@
+{# Citation for the following code:
+Date: 05/29/2024
+Adapted from:
+Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app?tab=readme-ov-file#step-0---quick-and-dirty-task-1-setup
+#}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Expenses - Personal Budget Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        function showform(dowhat) {
+            const sections = ['browse', 'insert', 'filter', 'edit', 'delete'];
+            sections.forEach(section => {
+                const element = document.getElementById(section);
+                if (element) {
+                    element.style.display = 'none';
+                }
+            });
+
+            const elementToShow = document.getElementById(dowhat);
+            if (elementToShow) {
+                elementToShow.style.display = 'block';
+            }
+        }
+    </script>
+</head>
+<body onload="showform('browse')">
+    <header>
+        <h1>Manage Expenses</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Error Messages Section -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div>
+                    {% for category, message in messages %}
+                        <p style="color:red;">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        <!-- INSERT Expense Section -->
+        <section id="insert">
+            <form action="/expenses" method="POST">
+                <legend><strong>Add New Expense</strong></legend>
+                <input type="hidden" value="{{ expenses.expenseID }}" name="expenseID">
+                <fieldset>
+
+                        <div class="form-group">
+
+                    <label for="userID">User:</label>
+                    <select id="userID" name="userID" required>
+                        {% for user in users %}
+                               <option value="{{ user.userID }}">{{ user.userName }}</option>
+                        {% endfor %}
+                    </select>
+                        </div>
+
+
+                        <div class="form-group">
+
+                    <label for="accountID">Account:</label>
+                    <select id="accountID" name="accountID" required>
+                        {% for account in accounts %}
+                            <option value="{{ account.accountID }}">{{ account.accountID }}</option>
+                        {% endfor %}
+                    </select>
+                        </div>
+
+                    
+                        <div class="form-group">
+
+                    <label for="expenseAmount">Amount:</label>
+                    <input type="number" id="expenseAmount" name="expenseAmount" step="0.01" required><br>
+                        </div>
+
+            
+                <div class="form-group">
+
+                    <label for="expenseDate">Date:</label>
+                    <input type="date" id="expenseDate" name="expenseDate" required><br>
+                        </div>
+
+
+    <div class="form-group">
+
+                    <label for="description">Description:</label>
+                    <input type="text" id="description" name="description" required><br>
+                        </div>
+
+            
+                <div class="form-group">
+
+                    <label for="expenseCategory">Category:</label>
+                    <select id="expenseCategory" name="expenseCategory">
+                        <option value="">None</option>
+                        {% for category in categories %}
+                            <option value="{{ category.categoryID }}">{{ category.categoryName }}</option>
+                        {% endfor %}
+                    </select>
+                        </div>
+
+                    <br>
+
+                </fieldset>
+                <button type="submit" name="Add_Expense">Add Expense</button>
+                <button type="button" onClick="showform('browse')">Cancel</button>
+            </form>
+        </section>
+
+        <!-- Filter Expenses Section -->
+        <section id="filter">
+            <form action="/expenses/filter" method="GET">
+                <legend><strong>Filter Expenses by Category</strong></legend>
+                <fieldset>
+                    <label for="categoryIdFilter">Category:</label>
+                    <select id="categoryIdFilter" name="categoryIdFilter">
+                        <option value="0">All</option>
+                        <option value="1">No Category</option>
+                        {% for category in categories %}
+                            <option value="{{ category.categoryID }}">{{ category.categoryName }}</option>
+                        {% endfor %}
+                    </select>
+                </fieldset>
+                <button type="submit">Filter</button>
+                <button type="button" onClick="showform('browse')">Cancel</button>
+            </form>
+        </section>
+
+        <!-- Browse Expenses Section -->
+        <section id="browse">
+            <p><a href="#" onClick="showform('insert')">Add New Expense</a></p>
+            <p><a href="#" onClick="showform('filter')">Filter by Category</a></p>
+            <table border="1" cellpadding="5">
+                {% if expenses %}
+                    <thead>
+                        <tr>
+                            <th>Expense ID</th>
+                            <th>Amount</th>
+                            <th>Date Spent</th>
+                            <th>Description</th>
+                            <th>Category Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for expense in expenses %}
+                            <tr>
+                                <td>{{ expense.expenseID }}</td>
+                                <td>{{ expense.amount }}</td>
+                                <td>{{ expense.dateSpent }}</td>
+                                <td>{{ expense.description }}</td>
+                                <td>{{ expense.categoryName }}</td>
+                                <td>
+                                    <a href="{{ url_for('expenses_bp.update_expense', expenseID=expense.expenseID) }}">Edit</a>
+                                    <form action="{{ url_for('expenses_bp.delete_expense', expenseID=expense.expenseID) }}" method="POST" style="display:inline;">
+                                        <button type="submit">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                {% endif %}
+            </table>
+        </section>
+
+
+        <!-- Existing Expense-Category Links Section -->
+        <section>
+            <div>
+                <h3>Existing Expense-Category Links</h3>
+                <table border="1" cellpadding="5">
+                    <thead>
+                        <tr>
+                            <th>Expense ID</th>
+                            <th>Expense Amount</th>
+                            <th>Date Spent</th>
+                            <th>Description</th>
+                            <th>Category ID</th>
+                            <th>Category Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for link in expense_category_links %}
+                            <tr>
+                                <td>{{ link.expenseID }}</td>
+                                <td>{{ link.amount }}</td>
+                                <td>{{ link.dateSpent }}</td>
+                                <td>{{ link.description }}</td>
+                                <td>{{ link.categoryID }}</td>
+                                <td>{{ link.categoryName }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© 2024 Personal Budget Tracker. All rights reserved.</p>
+    </footer>
+</body>
+</html>

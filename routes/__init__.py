@@ -30,6 +30,9 @@ def create_app():
     from routes.categories import categories_bp
     app.register_blueprint(categories_bp, url_prefix='/categories')
 
+    from routes.expenses import expenses_bp
+    app.register_blueprint(expenses_bp, url_prefix='/expenses')
+
     @app.route("/")
     def home():
         return render_template("index.html")

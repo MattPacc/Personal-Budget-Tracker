@@ -78,3 +78,14 @@ footer {
     text-align: center; /* Center-align text */
     margin-top: auto; /* Push footer to the bottom */
   }
+
+  input[type="text"],
+  input[type="number"],
+  input[type="date"],
+  select,
+  textarea {
+      min-width: 100px;
+      padding: 8px;
+      box-sizing: border-box;
+      margin-bottom: 15px;
+  }

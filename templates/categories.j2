@@ -73,8 +73,8 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app #}
                                         <td>{{ category[key] }}</td>
                                     {% endfor %}
                                     <td>
-                                        <a href="/update_category/{{ category.categoryID }}">Edit</a>
-                                        <form action="/delete_category/{{ category.categoryID }}" method="POST" style="display:inline;">
+                                        <a href="{{ url_for('categories_bp.update_category', categoryID=category.categoryID) }}">Edit</a>
+                                        <form action="{{ url_for('categories_bp.delete_category', categoryID=category.categoryID) }}" method="POST" style="display:inline;">
                                             <button type="submit">Delete</button>
                                         </form>
                                     </td>
@@ -106,22 +106,26 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app #}
                 <table border="1" cellpadding="5">
                     <thead>
                         <tr>
+                            <th>Expense ID</th>
+                            <th>Expense Amount</th>
+                            <th>Date Spent</th>
+                            <th>Description</th>
                             <th>Category ID</th>
                             <th>Category Name</th>
-                            <th>Expense ID</th>
-                            <th>Expense Description</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for link in category_expense_links %}
                             <tr>
+                                <td>{{ link.expenseID }}</td>
+                                <td>{{ link.expenseAmount }}</td>
+                                <td>{{ link.dateSpent }}</td>
+                                <td>{{ link.expenseDescription }}</td>
                                 <td>{{ link.categoryID }}</td>
                                 <td>{{ link.categoryName }}</td>
-                                <td>{{ link.expenseID }}</td>
-                                <td>{{ link.expenseDescription }}</td>
                                 <td>
-                                    <form action="/delete_category_expense_link/{{ link.categoryID }}/{{ link.expenseID }}" method="POST" style="display:inline;">
+                                    <form action="{{ url_for('categories_bp.delete_category_expense_link', categoryID=link.categoryID, expenseID=link.expenseID) }}" method="POST" style="display:inline;">
                                         <button type="submit">Delete</button>
                                     </form>
                                 </td>
@@ -132,10 +136,11 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app #}
             </div>
         </section>
 
-                <!-- Link Expense to Category Section -->
+
+        <!-- Link Expense to Category Section -->
         <section>
             <div id="link">
-                <form action="/link_expense_to_category" method="POST">
+                <form action="{{ url_for('categories_bp.link_expense_to_category') }}" method="POST">
                     <legend><strong>Link Expense to Category</strong></legend>
                     <fieldset>
                         <label for="expenseID">Expense:</label>
