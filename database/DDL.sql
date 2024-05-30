@@ -141,6 +141,14 @@ VALUES
     'finalFrontier456'
 );
 
+-- Inserting sample data into ExpensesCategoriesLink
+INSERT INTO ExpensesCategoriesLink (expenseID, categoryID)
+VALUES 
+(
+    (SELECT expenseID FROM Expenses WHERE description = 'Transport to Starbase 12'), 
+    (SELECT categoryID FROM Categories WHERE categoryName = 'Travel')
+);
+
 -- Re-enable foreign key checks and commit the transaction
 SET FOREIGN_KEY_CHECKS = 1;
 COMMIT;

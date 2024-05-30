@@ -80,7 +80,7 @@ WHERE categoryId = :categoryId;
 -- =============================================
 
 -- Insert a new user password
-INSERT INTO userPasswords (userId, passwordHash) VALUES (:userId, :passwordHash);
+INSERT INTO userPasswords (userId, password) VALUES (:userId, :password);
 
 -- Select all user passwords to view in the table
-SELECT userId, passwordHash FROM userPasswords;
+SELECT userId, password FROM userPasswords;
