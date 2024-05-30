@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users - Personal Budget Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        function showform(dowhat) {
+            const sections = ['browse', 'insert'];
+            sections.forEach(section => {
+                const element = document.getElementById(section);
+                if (element) {
+                    element.style.display = 'none';
+                }
+            });
+
+            const elementToShow = document.getElementById(dowhat);
+            if (elementToShow) {
+                elementToShow.style.display = 'block';
+            }
+        }
+    </script>
+</head>
+<body onload="showform('browse')">
+    <header>
+        <h1>Manage Users</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/categories">Manage Categories</a></li>
+                <li><a href="/expenses">Manage Expenses</a></li>
+                <li><a href="/income">Manage Income Sources</a></li>
+                <li><a href="/users">Manage Users</a></li>
+                <li><a href="/passwords">Manage User Passwords</a></li>
+                <li><a href="/accounts">Manage Accounts</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <!-- Error Messages Section -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div>
+                    {% for category, message in messages %}
+                        <p style="color:red;">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        <!-- Browse Users Section -->
+        <section id="browse">
+            <p><a href="#" onClick="showform('insert')">Add New User</a></p>
+            <table border="1" cellpadding="5">
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>User Name</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.userID }}</td>
+                        <td>{{ user.userName }}</td>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Insert User Section -->
+        <section id="insert">
+            <form action="{{ url_for('users_bp.manage_users') }}" method="POST">
+                <legend><strong>Add New User</strong></legend>
+                <fieldset>                    
+                    <label for="userName">User Name:</label>
+                    <input type="text" id="userName" name="userName" required><br>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required><br>
+
+                </fieldset>
+                <button type="submit">Add User</button>
+                <button type="button" onClick="showform('browse')">Cancel</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 Personal Budget Tracker. All rights reserved.</p>
+    </footer>
+</body>
+</html>

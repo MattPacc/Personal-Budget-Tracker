@@ -1,5 +1,4 @@
 from flask import Blueprint, request, redirect, flash, render_template, current_app, url_for
-from flask_mysqldb import MySQLdb
 from . import expenses_bp
 
 @expenses_bp.route("/", methods=["POST", "GET"])

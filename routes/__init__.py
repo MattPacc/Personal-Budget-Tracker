@@ -33,6 +33,18 @@ def create_app():
     from routes.expenses import expenses_bp
     app.register_blueprint(expenses_bp, url_prefix='/expenses')
 
+    from routes.income_sources import income_sources_bp
+    app.register_blueprint(income_sources_bp, url_prefix='/income')
+
+    from routes.users import users_bp
+    app.register_blueprint(users_bp, url_prefix='/users')
+
+    from routes.user_passwords import user_passwords_bp
+    app.register_blueprint(user_passwords_bp, url_prefix='/passwords')
+    
+    from routes.accounts import accounts_bp
+    app.register_blueprint(accounts_bp, url_prefix='/accounts')
+
     @app.route("/")
     def home():
         return render_template("index.html")
