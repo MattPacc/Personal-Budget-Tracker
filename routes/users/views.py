@@ -1,3 +1,8 @@
+# Citation for the following code:
+# Date: 05/22/2024
+# Adapted from:
+# Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
+# Exploration - Developing in Flask: https://canvas.oregonstate.edu/courses/1958399/pages/exploration-developing-in-flask?module_item_id=24181857
 from flask import Blueprint, request, redirect, flash, render_template, current_app
 from . import users_bp
 
@@ -6,10 +11,12 @@ def manage_users():
     mysql = current_app.extensions['mysql']
     
     if request.method == "POST":
+        # Retrieve form data
         cur = mysql.connection.cursor()
         user_name = request.form["userName"]
         email = request.form["email"]
 
+        # Insert a new user into the Users table
         query = "INSERT INTO Users (userName, email) VALUES (%s, %s);"
         cur.execute(query, ( user_name, email))
         mysql.connection.commit()
@@ -17,6 +24,7 @@ def manage_users():
         return redirect("/users")
 
     if request.method == "GET":
+        # Retrieve all users
         query = "SELECT userID, userName, email FROM Users;"
         cur = mysql.connection.cursor()
         cur.execute(query)

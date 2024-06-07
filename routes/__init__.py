@@ -1,9 +1,8 @@
 # Citation for the following code:
 # Date: 05/22/2024
 # Adapted from:
-# Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app?tab=readme-ov-file#step-0---quick-and-dirty-task-1-setup
-# and
 # Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
+# Exploration - Developing in Flask: https://canvas.oregonstate.edu/courses/1958399/pages/exploration-developing-in-flask?module_item_id=24181857
 from flask import Flask, render_template
 from flask_mysqldb import MySQL
 

@@ -1,10 +1,10 @@
-{# Citation for the following code:
+{# 
+Citation for the following code:
 Date: 05/22/2024
-Adapted from:
-Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app?tab=readme-ov-file#step-0---quick-and-dirty-task-1-setup
-and
-Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app #}
-
+Code was Adapted from:
+Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
+Exploration - Developing in Flask: https://canvas.oregonstate.edu/courses/1958399/pages/exploration-developing-in-flask?module_item_id=24181857
+#}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,17 +30,17 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app #}
     </header>
 
     <main>
-    <form action="{{ url_for('categories_bp.update_category', categoryID=category.categoryID) }}" method="POST">
-        <legend><strong>Edit Category</strong></legend>
-        <fieldset>
-            <input type="hidden" value="{{ category.categoryID }}" name="categoryID" required>
-            <label for="categoryName">Category Name:</label>
-            <input type="text" id="categoryName" name="categoryName" value="{{ category.categoryName }}" required>
-        </fieldset>
-        <button type="submit" name="Update_Category">Update Category</button>
-        <button type="button" onClick="window.location.href='/categories'">Cancel</button>
-    </form>
-</main>
+        <form action="{{ url_for('categories_bp.update_category', categoryID=category.categoryID) }}" method="POST">
+            <legend><strong>Edit Category</strong></legend>
+            <fieldset>
+                <input type="hidden" value="{{ category.categoryID }}" name="categoryID" required>
+                <label for="categoryName">Category Name:</label>
+                <input type="text" id="categoryName" name="categoryName" value="{{ category.categoryName }}" required>
+            </fieldset>
+            <button type="submit" name="Update_Category">Update Category</button>
+            <button type="button" onClick="window.location.href='/categories'">Cancel</button>
+        </form>
+    </main>
 
     <footer>
         <p>© 2024 Personal Budget Tracker. All rights reserved.</p>

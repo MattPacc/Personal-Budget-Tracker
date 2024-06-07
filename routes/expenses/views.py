@@ -1,3 +1,8 @@
+# Citation for the following code:
+# Date: 05/22/2024
+# Adapted from:
+# Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
+# Exploration - Developing in Flask: https://canvas.oregonstate.edu/courses/1958399/pages/exploration-developing-in-flask?module_item_id=24181857
 from flask import Blueprint, request, redirect, flash, render_template, current_app, url_for
 from . import expenses_bp
 
@@ -5,6 +10,7 @@ from . import expenses_bp
 def manage_expenses():
     mysql = current_app.extensions['mysql']
     if request.method == "POST":
+        # Retrieve form data
         cur = mysql.connection.cursor()
         user_id = request.form["userID"]
         account_id = request.form["accountID"]
@@ -13,7 +19,7 @@ def manage_expenses():
         date_spent = request.form["expenseDate"]
         description = request.form["description"]
         expense_id = request.form.get("expenseID")
-
+        # Insert a new expense into the Expenses table
         query = """
         INSERT INTO Expenses (userID, accountID, amount, dateSpent, description)
         VALUES (%s, %s, %s, %s, %s);
@@ -21,7 +27,7 @@ def manage_expenses():
         cur.execute(query, (user_id, account_id, amount, date_spent, description))
 
         expense_id = cur.lastrowid
-
+        # Insert a new record into the join table ExpensesCategoriesLink
         query2 = "INSERT INTO ExpensesCategoriesLink (expenseID, categoryID) VALUES (%s, %s);"
         cur.execute(query2, (expense_id, category_id))
 
@@ -31,6 +37,7 @@ def manage_expenses():
         return redirect("/expenses")
 
     if request.method == "GET":
+        # Retrieve all expenses along with their category names
         query = """
             SELECT e.expenseID, e.amount, e.dateSpent, e.description, 
                    ecl.categoryID, c.categoryName
@@ -55,14 +62,17 @@ def manage_expenses():
 
         expenses = list(expenses.values())
 
+        # Retrieve all categories to populate the dropdown
         query2 = "SELECT * FROM Categories;"
         cur.execute(query2)
         categories = cur.fetchall()
 
+        # Retrieve all users to populate the dropdown
         query3 = "SELECT userID, userName FROM Users;"
         cur.execute(query3)
         users = cur.fetchall()
 
+        # Retrieve all accounts to populate the dropdown
         query4 = "SELECT accountID FROM Accounts;"
         cur.execute(query4)
         accounts = cur.fetchall()
@@ -75,6 +85,7 @@ def manage_expenses():
 def update_expense(expenseID):
     mysql = current_app.extensions['mysql']
     if request.method == "GET":
+        # Retrieve the specific expense by expenseID
         query = """
             SELECT e.expenseID, e.amount, e.dateSpent, e.description, ecl.categoryID
             FROM Expenses e
@@ -85,6 +96,7 @@ def update_expense(expenseID):
         cur.execute(query, (expenseID,))
         expense = cur.fetchone()
 
+        # Retrieve all categories to populate the dropdown
         query2 = "SELECT * FROM Categories;"
         cur.execute(query2)
         categories = cur.fetchall()
@@ -100,6 +112,7 @@ def update_expense(expenseID):
         account_id = request.form["accountID"]
         expense_id = request.form["expenseID"]
 
+        # Update the expense in the Expenses table
         query = """
         UPDATE Expenses 
         SET amount = %s, dateSpent = %s, description = %s 
@@ -108,8 +121,13 @@ def update_expense(expenseID):
         cur = mysql.connection.cursor()
         cur.execute(query, (amount, date_spent, description, expense_id, user_id, account_id))
 
-        query2 = "REPLACE INTO ExpensesCategoriesLink (expenseID, categoryID) VALUES (%s, %s);"
-        cur.execute(query2, (expense_id, category_id))
+        # Handle the link between expense and category
+        if category_id == 'NULL' or category_id == '':
+            query2 = "DELETE FROM ExpensesCategoriesLink WHERE expenseID = %s;"
+            cur.execute(query2, (expense_id,))
+        else:
+            query2 = "REPLACE INTO ExpensesCategoriesLink (expenseID, categoryID) VALUES (%s, %s);"
+            cur.execute(query2, (expense_id, category_id))
 
         mysql.connection.commit()
         flash("Expense updated successfully!", "success")
@@ -121,6 +139,8 @@ def update_expense(expenseID):
 def delete_expense(expenseID):
     mysql = current_app.extensions['mysql']
     cur = mysql.connection.cursor()
+
+    # Delete the expense from the Expenses table
     delete_expense_query = "DELETE FROM Expenses WHERE expenseID = %s;"
     cur.execute(delete_expense_query, (expenseID,))
 
@@ -138,6 +158,7 @@ def filter_expenses():
 
     cur = mysql.connection.cursor()
 
+    # Base query to retrieve expenses
     query = """
         SELECT e.expenseID, e.amount, e.dateSpent, e.description, 
                ecl.categoryID, c.categoryName
