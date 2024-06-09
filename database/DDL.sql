@@ -16,7 +16,7 @@ CREATE OR REPLACE TABLE Users (
 -- Creating Accounts table
 CREATE OR REPLACE TABLE Accounts (
     accountID INT AUTO_INCREMENT NOT NULL,
-    userID INT UNIQUE NOT NULL,
+    userID INT NOT NULL,
     currentBalance DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
     FOREIGN KEY (userID) REFERENCES Users(userID) ON DELETE CASCADE ON UPDATE CASCADE,
     PRIMARY KEY (accountID)
@@ -57,7 +57,7 @@ CREATE OR REPLACE TABLE IncomeSources (
 
 -- Creating UserPasswords table
 CREATE OR REPLACE TABLE UserPasswords (
-    userID INT UNIQUE NOT NULL,
+    userID INT NOT NULL,
     password VARCHAR(255) NOT NULL,
     FOREIGN KEY (userID) REFERENCES Users(userID) ON DELETE CASCADE ON UPDATE CASCADE
 );

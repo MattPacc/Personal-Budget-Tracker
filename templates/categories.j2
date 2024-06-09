@@ -59,8 +59,7 @@ Exploration - Developing in Flask: https://canvas.oregonstate.edu/courses/195839
         {% endwith %}
         
         <!-- Browse Categories Section -->
-        <section>
-            <div id="browse">
+            <section id="browse">
                 <p><a href="#" onClick="showform('insert')">Add New</a></p>
                 <table border="1" cellpadding="5">
                     {% if categories %}
@@ -89,11 +88,11 @@ Exploration - Developing in Flask: https://canvas.oregonstate.edu/courses/195839
                         </tbody>
                     {% endif %}
                 </table>
-            </div>
+            </section>
         </section>
 
         <!-- Insert Category Section -->
-            <div id="insert">
+            <section id="insert">
                 <form action="/categories" method="POST">
                     <legend><strong>Add Category</strong></legend>
                     <fieldset>
@@ -103,7 +102,7 @@ Exploration - Developing in Flask: https://canvas.oregonstate.edu/courses/195839
                     <button type="submit" name="Add_Category">Add Category</button>
                     <button type="button" onClick="showform('browse')">Cancel</button>
                 </form>
-            </div>
+            </section>
 
         <!-- Existing Category-Expense Links Section -->
         <section>

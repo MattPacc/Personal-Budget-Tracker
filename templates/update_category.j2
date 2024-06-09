@@ -30,16 +30,18 @@ Exploration - Developing in Flask: https://canvas.oregonstate.edu/courses/195839
     </header>
 
     <main>
-        <form action="{{ url_for('categories_bp.update_category', categoryID=category.categoryID) }}" method="POST">
-            <legend><strong>Edit Category</strong></legend>
-            <fieldset>
-                <input type="hidden" value="{{ category.categoryID }}" name="categoryID" required>
-                <label for="categoryName">Category Name:</label>
-                <input type="text" id="categoryName" name="categoryName" value="{{ category.categoryName }}" required>
-            </fieldset>
-            <button type="submit" name="Update_Category">Update Category</button>
-            <button type="button" onClick="window.location.href='/categories'">Cancel</button>
-        </form>
+        <section>
+            <form action="{{ url_for('categories_bp.update_category', categoryID=category.categoryID) }}" method="POST">
+                <legend><strong>Edit Category</strong></legend>
+                <fieldset>
+                    <input type="hidden" value="{{ category.categoryID }}" name="categoryID" required>
+                    <label for="categoryName">Category Name:</label>
+                    <input type="text" id="categoryName" name="categoryName" value="{{ category.categoryName }}" required>
+                </fieldset>
+                <button type="submit" name="Update_Category">Update Category</button>
+                <button type="button" onClick="window.location.href='/categories'">Cancel</button>
+            </form>
+        </section>
     </main>
 
     <footer>

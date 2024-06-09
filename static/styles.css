@@ -5,6 +5,7 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
+    min-height: 100vh;
     flex-direction: column;
     background-color: #ffffff; /* White background */
 }
@@ -22,7 +23,7 @@ body {
 
 /* Header styles */
 header {
-    background-color: #000000; /* Black background */
+    background-color: #3b7084; /* Black background */
     color: #ffffff; /* White text */
     padding: 20px; 
     text-align: center; 
@@ -65,11 +66,11 @@ nav a:hover {
 
 /* Section styles */
 section {
-    background-color: #f0f0f0; /* Light gray background for sections */
+    margin-top: 20px; /* Additional spacing at the top of each section */
+    background-color: #c6d9e3; /* Light gray background for sections */
     padding: 20px;
     box-sizing: border-box; /* Include padding in width */
     min-width: 300px; /* Minimum width for smaller screens */
-    margin-bottom: 20px; /* Additional spacing at the bottom of each section */
 }
 
 footer {

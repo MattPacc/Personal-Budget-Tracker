@@ -28,8 +28,10 @@ def manage_expenses():
 
         expense_id = cur.lastrowid
         # Insert a new record into the join table ExpensesCategoriesLink
-        query2 = "INSERT INTO ExpensesCategoriesLink (expenseID, categoryID) VALUES (%s, %s);"
-        cur.execute(query2, (expense_id, category_id))
+        category_id = request.form.get("expenseCategory")
+        if category_id == '':
+            category_id = None
+
 
         mysql.connection.commit()
         flash("Expense added successfully!", "success")
