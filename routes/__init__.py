@@ -13,10 +13,11 @@ def create_app():
     app = Flask(__name__, static_url_path='/static', static_folder='../static')
     app.secret_key = 'super_secret_key'  # Needed for flashing messages
 
-    app.config['MYSQL_HOST'] = 'classmysql.engr.oregonstate.edu'
-    app.config['MYSQL_USER'] = 'cs340_paccionm'
-    app.config['MYSQL_PASSWORD'] = '1546'  # last 4 of onid
-    app.config['MYSQL_DB'] = 'cs340_paccionm'
+    # Replace placeholder credentials with your MySQL configuration
+    app.config['MYSQL_HOST'] = 'localhost'  # or any placeholder
+    app.config['MYSQL_USER'] = 'username'   # or any placeholder
+    app.config['MYSQL_PASSWORD'] = 'password'  # or any placeholder
+    app.config['MYSQL_DB'] = 'database'  # or any placeholder
     app.config['MYSQL_CURSORCLASS'] = "DictCursor"
 
       # Initialize MySQL

@@ -1,4 +1,3 @@
-# CS340_database_project
 # Personal Budget Tracker
 
 ## Overview
@@ -64,6 +63,19 @@ The **Personal Budget Tracker** is a web application built with Flask, designed 
     flask run
     ```
 
+## Configuration
+
+### Database Setup
+
+The database schema (DDL) and data (DML) files are located in the database folder.
+Update the database configuration in app.py:
+Replace placeholder credentials (MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DB) with your actual database credentials if deploying in a production environment.
+
+### Database Files
+
+database/schema.sql: Contains the database schema definition (DDL).
+database/data.sql: Contains sample data for demonstration purposes (DML).
+
 ## Usage
 
 1. Open a web browser and navigate to `http://127.0.0.1:55308`.
@@ -116,23 +128,9 @@ The **Personal Budget Tracker** is a web application built with Flask, designed 
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-## Acknowledgments
-
-- Rajan Patel (TA) for feedback and guidance
-- Peer reviewers for their constructive feedback and suggestions
-
-## Citations
-
-Code was Adapted from:
-
-Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
-
-Exploration - Developing in Flask: https://canvas.oregonstate.edu/courses/1958399/pages/exploration-developing-in-flask?module_item_id=24181857
-
-The code was mostly from these sources but has been modified in many different ways. The templating code is the most similar to the starter code for the Flask application. The Flask blueprinting configuration is original. However the routes are based on the starter app particularly the bsg_people_app portion. Citations are used where code was adapted and modified from the original.
-
-The majority of the code in this project is based on the CS340 starter app. The templating code follows the structure of the starter code for the Flask application and the route implementations are largely adapted from the starter app as well, particularly from the `bsg_people_app` portion. Citations are provided wherever code has been adapted and modified from the original sources.
-
+## Author
+- Matthew J Paccione (@MattPacc)
+- matthew.j.paccione@gmail.com
 
 ### Guides Referenced
 
@@ -144,4 +142,3 @@ https://flask.palletsprojects.com/en/3.0.x/blueprints/
 
 #### Github SHH keys:
 https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
-
